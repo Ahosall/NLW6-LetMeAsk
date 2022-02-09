@@ -1,14 +1,15 @@
-import { Button } from './components/Button';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { Home } from './pages/home'
+// import { NewRoom } from './pages/newRoom';
 
 function App() {
   return (
-    <div>
-      <Button/>
-      <Button/>
-      <Button/>
-      <Button/>
-      <Button/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
