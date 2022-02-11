@@ -1,26 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 
-import { firebase, auth } from '../services/firebase'
-
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import googleIconImg from '../assets/images/google-icon.svg'
 
 import { Button } from '../components/Button';
 
+import { useAuth } from '../hooks/useAuth';
+
 import '../styles/auth.scss'
 
 export function Home() {
   const navigate = useNavigate();
+  const { user, signInWithGoogle } = useAuth();
 
-  function handleCreateRoom() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-
-    auth.signInWithPopup(provider).then(res => {
-      console.log(res)
-    });
-
-    // navigate('/rooms/new');
+  async function handleCreateRoom() {
+    if (!user) await signInWithGoogle()
+    navigate('/rooms/new');
   }
 
   return (
@@ -42,10 +38,10 @@ export function Home() {
           </button>
           <div className="separator">ou entre em uma sala</div>
           <form>
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Digite o código da sala"
-            />          
+            />
             <Button type="submit">
               Entra na sala
             </Button>
